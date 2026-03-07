@@ -20,7 +20,9 @@ This framework focuses on **decision-ready performance insights**:
 
 This is not a static report.  
 It is a structured performance system.
+## Dashboard Overview
 
+![Dashboard Overview](screenshots/dashboard_overview.png)
 ---
 
 ## 📊 Core Capabilities
@@ -44,6 +46,10 @@ Impressions → Clicks → Landing Page Views → Leads
 Quickly identify drop-offs and optimization opportunities across acquisition stages.
 
 ---
+
+## Campaign Performance
+
+![Campaign Performance](screenshots/campaign_performance.png)
 
 ### 3️⃣ Lead Performance Scoring
 Campaign and Ad Set ranking based on efficiency:
@@ -71,7 +77,9 @@ Clear visibility into:
 - Budget reallocation opportunities
 
 ---
+## Funnel Analysis
 
+![Funnel Analysis](screenshots/funnel_analysis.png)
 ## 🏗 Architecture
 
 **Data Source**
