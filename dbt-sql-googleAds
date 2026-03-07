@@ -1,0 +1,57 @@
+{{ config(materialized='view') }}
+
+with metrics as (
+  select *
+  from {{ source('Yda_labs', 'google_Ads_Metrics') }}
+),
+
+campaigns as (
+  select *
+  from {{ source('Yda_labs', 'google_campaings') }}
+),
+
+accounts as (
+  select *
+  from {{ source('Yda_labs', 'google_ads_Account') }}
+),
+
+base as (
+  select
+    m.date,
+
+    -- account
+    a.customer_id as account_id,
+    a.customer_descriptive_name as account_name,
+
+    -- campaign
+    c.campaign_id,
+    c.campaign_name,
+    c.campaign_status,
+
+    -- metrics (Google uses micros sometimes; depends on your table)
+    sum(m.impressions) as impressions,
+    sum(m.clicks) as clicks,
+    sum(m.conversions) as conversions,
+    sum(m.cost) as cost,
+    sum(m.conversion_value) as conversion_value
+
+  from metrics m
+  left join campaigns c
+    on m.campaign_id = c.campaign_id
+  left join accounts a
+    on a.customer_id = c.customer_id
+
+  -- optional: keep only enabled campaigns
+  where c.campaign_status = 'ENABLED'
+
+  group by 1,2,3,4,5,6
+)
+
+select
+  *,
+  safe_divide(clicks, impressions) as ctr,
+  safe_divide(cost, clicks) as cpc,
+  safe_divide(cost * 1000, impressions) as cpm,
+  safe_divide(cost, conversions) as cpa,
+  safe_divide(conversion_value, cost) as roas
+from base
