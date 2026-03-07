@@ -22,7 +22,7 @@ This is not a static report.
 It is a structured performance system.
 ## Dashboard Overview
 
-![Dashboard Overview](screenshots/dashboard_overview.png)
+screenshots/dashboard_overview.png
 ---
 
 ## 📊 Core Capabilities
