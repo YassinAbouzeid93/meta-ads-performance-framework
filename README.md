@@ -28,7 +28,7 @@ Campaign and ad set ranking
 Instead of static reporting, the goal is to build a performance intelligence system that helps marketing teams scale winning campaigns and fix underperforming ones.
 
 📊 Dashboard Overview
-![Dashboard Overview](main/dashboard_overview.png)
+![Dashboard Overview](main/campaign_performance.png)
 The executive dashboard provides a high-level view of campaign performance including:
 
 Total Spend
