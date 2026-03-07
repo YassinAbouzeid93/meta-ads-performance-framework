@@ -29,6 +29,8 @@ Instead of static reporting, the goal is to build a performance intelligence sys
 
 📊 Dashboard Overview
 ![Dashboard Overview](dashboard_overview.png)
+![Campaign Performance](campaign_performance.png)
+![Funnel Analysis](funnel_analysis.png)
 The executive dashboard provides a high-level view of campaign performance including:
 
 Total Spend
