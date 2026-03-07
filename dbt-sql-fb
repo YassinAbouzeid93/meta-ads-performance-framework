@@ -1,0 +1,49 @@
+{{ config(materialized='view') }}
+
+with src as (
+  select *
+    from {{ source('Yda_labs', 'fb_merged') }}
+),
+
+agg as (
+  select
+    date,
+    account_name,
+    account_id,
+    campaign,
+
+    sum(clicks) as clicks,
+    sum(outbound_clicks_outbound_click) as outbound_clicks,
+    sum(impressions) as impressions,
+    sum(reach) as reach,
+    sum(spend) as spend,
+
+    sum(action_values_omni_purchase) as omni_purchase_value,
+    sum(actions_omni_purchase) as omni_purchase,
+
+    sum(actions_landing_page_view) as landing_views,
+    sum(actions_lead) as leads,
+    sum(actions_offsite_conversion_fb_pixel_lead) as offsite_conversion,
+    sum(actions_onsite_conversion_lead_grouped) as onsite_conversion
+
+  from src
+  group by 1,2,3,4
+)
+
+select
+  *,
+  -- core rates
+  safe_divide(clicks, impressions) as ctr,
+  safe_divide(spend, clicks) as cpc,
+  safe_divide(spend * 1000, impressions) as cpm,
+  safe_divide(impressions, reach) as frequency,
+
+  -- purchase economics
+  safe_divide(omni_purchase_value, spend) as roas,
+  safe_divide(spend, omni_purchase) as cpa_purchase,
+
+  -- lead economics (pick the one you trust)
+  safe_divide(spend, leads) as cpa_lead,
+  safe_divide(spend, landing_views) as cplpv
+
+from agg
